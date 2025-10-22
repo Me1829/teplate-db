@@ -1,0 +1,42 @@
+-- =============================================
+-- SQL CREATE TABLE - STRUCTURE DATABASE
+-- =============================================
+
+CREATE DATABASE db_smk;
+USE db_smk;
+
+-- TABEL SISWA
+CREATE TABLE siswa (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nis VARCHAR(10) NOT NULL,
+    nama VARCHAR(100) NOT NULL,
+    kelas VARCHAR(50) NOT NULL,
+    jurusan VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- TABEL JURUSAN (UNTUK RELATIONSHIP)
+CREATE TABLE jurusan (
+    id_jurusan INT(11) AUTO_INCREMENT PRIMARY KEY,
+    kode_jurusan VARCHAR(10) UNIQUE NOT NULL,
+    nama_jurusan VARCHAR(50) NOT NULL,
+    kapasitas INT(11) DEFAULT 0
+);
+
+-- TABEL NILAI (UNTUK RELATIONSHIP)
+CREATE TABLE nilai (
+    id_nilai INT(11) AUTO_INCREMENT PRIMARY KEY,
+    siswa_id INT(11) NOT NULL,
+    mata_pelajaran VARCHAR(50) NOT NULL,
+    nilai_angka DECIMAL(4,2) NOT NULL,
+    semester ENUM('Ganjil', 'Genap') NOT NULL,
+    FOREIGN KEY (siswa_id) REFERENCES siswa(id) ON DELETE CASCADE
+);
+
+-- TABEL KELAS (UNTUK RELATIONSHIP)
+CREATE TABLE kelas (
+    id_kelas INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nama_kelas VARCHAR(20) NOT NULL,
+    wali_kelas VARCHAR(100) NOT NULL,
+    tingkat VARCHAR(10) NOT NULL
+);
